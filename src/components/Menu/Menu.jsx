@@ -64,12 +64,13 @@ const Menu = ({ children }) => {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', paddingTop: 5 }}>
         <Grid
           container
           direction="row"
           justifyContent="center"
           alignItems="center"
+          justifySelf="center"
         >
           <Grid item xs={12} md={8}>
             {children}
