@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -8,12 +8,14 @@ import { FilePond, registerPlugin } from 'react-filepond';
 
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 // Import the Image EXIF Orientation and Image Preview plugins
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+
+import ContextFile from '../../context/ContextFile';
 
 // Register the plugins
 registerPlugin(
@@ -25,18 +27,28 @@ registerPlugin(
 export const HEADERS = {
   headers: {
     'Content-Type': 'multipart/form-data',
+    'Access-Control-Allow-Credentials': true,
+    'Access-Control-Allow-Origin': '*',
   },
 };
 
 // Our app
 const InputFile = ({ setResultado }) => {
   const [files, setFiles] = useState([]);
+  const { modelo } = useContext(ContextFile);
 
   const onProcessFile = async (_fieldName, file, _metadata, load) => {
     try {
       const formData = new FormData();
       formData.append('file', file);
+
+      if (modelo) {
+        console.log(modelo);
+        formData.append('modelo_priorizado', modelo);
+      }
+
       const result = await axios.post('https://backend-rna.onrender.com/upload-file', formData, HEADERS);
+
       const { predictions } = result.data;
 
       if (predictions) {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 
 // material ui core
 import Alert from '@mui/material/Alert';
@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import Card from '../../components/Card/Card';
 import InputFile from '../../components/InputFile/InputFile';
 import PieChart from '../../components/PieChart/PieChart';
+import ContextFile from '../../context/ContextFile';
 
 const transformResult = (result) => {
   if (!result) {
@@ -62,6 +63,7 @@ const transformResult = (result) => {
 
 const SubirArchivo = () => {
   const [resultado, setResultado] = useState(null);
+  const { modelo } = useContext(ContextFile);
 
   const parsedResult = useMemo(() => transformResult(resultado), [resultado]);
   return (
@@ -74,6 +76,16 @@ const SubirArchivo = () => {
         <div>
           <InputFile setResultado={setResultado} />
         </div>
+
+        {modelo
+          ? (
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Alert severity="info">La predicción se realizará con el módelo subido</Alert>
+              </Grid>
+            </Grid>
+          )
+          : null}
 
         {resultado
           ? (

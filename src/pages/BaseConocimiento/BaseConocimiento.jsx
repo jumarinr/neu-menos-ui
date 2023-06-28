@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 // material ui core
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
 
 // material ui icons
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import IconButton from '@mui/material/IconButton';
 
 import Card from '../../components/Card/Card';
+import InputFileModelo from '../../components/InputFile/InputFileModelo';
 
 const BaseConocimiento = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,29 +45,42 @@ const BaseConocimiento = () => {
           <b>Base de conocimiento</b>
         </Typography>
 
-        <div className="d-flex justify-content-start">
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              <b>Conocimiento público</b>
-            </Typography>
+        <div>
 
-            {isLoading
-              ? (
-                <CircularProgress
-                  size={50}
-                  sx={{ color: 'primary' }}
-                />
-              )
-              : (
-                <IconButton color="primary" size="medium" onClick={onDowload}>
-                  <CloudDownloadIcon fontSize="large" />
-                </IconButton>
+          <Grid container>
 
-              )}
-            <Typography variant="subtitle2" color="primary" gutterBottom>
-              <b>Descargar</b>
-            </Typography>
-          </div>
+            <Grid item xs={12} md={6}>
+              <div className="d-flex justify-content-start">
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    <b>Conocimiento público</b>
+                  </Typography>
+
+                  {isLoading
+                    ? (
+                      <CircularProgress
+                        size={50}
+                        sx={{ color: 'primary' }}
+                      />
+                    )
+                    : (
+                      <IconButton color="primary" size="medium" onClick={onDowload}>
+                        <CloudDownloadIcon fontSize="large" />
+                      </IconButton>
+
+                    )}
+                  <Typography variant="subtitle2" color="primary" gutterBottom>
+                    <b>Descargar</b>
+                  </Typography>
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div className="d-flex justify-content-end">
+                <InputFileModelo />
+              </div>
+            </Grid>
+          </Grid>
         </div>
       </div>
     </Card>
